@@ -1,0 +1,38 @@
+DMLITE_remapper
+
+A fix for the buggy DMLITE drum module high-hat midi signal.
+
+This is a program for *nix-based systems using the ALSA sound architecture. 
+
+The DMLITE electronic drum kit, manufactured by Alesis, comes with a drum module that sends unusual MIDI signals. When you hit the high-hat with the high-hat pedal down, rather than sending a "Closed High-hat (42)" note, it first sends a control signal to the Foot Control (MSB) which informs it how far the pedal is depressed, and then sends an "Open High-hat (46)" note. Most software synths interpret this as an open high-hat sound.
+
+This program remaps this signal to the standard codes that most software synths understand, fixing the problem. You can select how deeply you need to depress the pedal to close the high-hat (50% by default) by using the -t parameter. 
+
+Run the program and add it to your ALSA MIDI subscription chain by using 'aconnect' or a gui.
+
+Note that for lower latency this program dispatches all MIDI signals immediately instead of queueing. If your software synth can't keep up with your intensely fast drumming and starts skipping sounds, this is probably the first thing you'll want to change (or get a faster computer).
+
+Bonus points for more serious drummers: Since the DMLITE sends information about just how deeply the pedal is depressed, it should be possible to use the MIDI volume control to create "muffled" high hat sounds at intermediate levels of depression.
+
+
+
+
+
+---
+
+Dependencies:
+
+	alsalib
+
+
+
+---
+
+	Usage: remapper [OPTIONS]
+	Remaps high-hat signal from DMLITE to 'closed high-hat' 
+	if pedal is depressed more than t/127 of the way. 
+	Add it to your ALSA midi chain with 'aconnect'. 
+	
+		-h   This information 
+		-t   Pedal threshold [64] 
+	

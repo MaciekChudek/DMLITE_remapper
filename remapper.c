@@ -1,4 +1,5 @@
-//gcc reader.c -o reader -lasound
+//compile with:
+//gcc remapper.c -o remapper -lasound
 
 
 #include <stdio.h>
@@ -51,12 +52,10 @@ void midi_action(snd_seq_t *seq_handle) {
 		//set pedal value
 		if(ev->type == SND_SEQ_EVENT_CONTROLLER && ev->data.control.channel == 9 && ev->data.control.param == 4){
 			pedal_val = ev->data.control.value;
-			fprintf(stderr, "Pedal... %5d\n", pedal_val);
 		}
 		//change high-hat signal
 		if( (ev->type == SND_SEQ_EVENT_NOTEON || ev->type == SND_SEQ_EVENT_NOTEOFF) && ev->data.control.channel == 9 && ev->data.note.note == 46 && pedal_val >= pedal_threshold){
-			ev->data.note.note = 42;
-			fprintf(stderr, "Remapped... %5d\n", ev->data.note.note);
+			ev->data.note.note = 42;			
 		}
 		
 		//resend event

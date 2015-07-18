@@ -62,8 +62,8 @@ void midi_action(snd_seq_t *seq_handle) {
 		//snd_seq_ev_clear(ev);
 		snd_seq_ev_set_source(ev, out_port );		
 		snd_seq_ev_set_subs(ev);		
-        snd_seq_ev_set_direct(ev);
-        snd_seq_event_output_direct(seq_handle, ev);
+		snd_seq_ev_set_direct(ev);
+		snd_seq_event_output_direct(seq_handle, ev);
 		snd_seq_drain_output(seq_handle);
 		snd_seq_free_event(ev);
 		
